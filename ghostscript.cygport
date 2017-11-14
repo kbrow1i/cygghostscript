@@ -1,5 +1,5 @@
 NAME="ghostscript"
-VERSION=9.21
+VERSION=9.22
 RELEASE=1
 CATEGORY="Graphics"
 SUMMARY="GPL PostScript interpreter"
@@ -57,7 +57,7 @@ src_unpack_hook() {
 	rm -rf expat/ freetype/ jpeg/ lcms{,2}/ libpng/ tiff/ zlib/
 }
 
-FONTPATH="/usr/share/fonts/urw-base35"
+FONTPATH="/usr/share/fonts/urw-base35:/usr/share/fonts"
 for p in /usr/share/poppler/cMap/*
 do
     FONTPATH=${FONTPATH}:${p}
