@@ -1,6 +1,6 @@
 NAME="ghostscript"
 VERSION=9.22
-RELEASE=2
+RELEASE=3
 CATEGORY="Graphics"
 SUMMARY="GPL PostScript interpreter"
 DESCRIPTION="GNU Ghostscript is a PostScript interpreter capable of converting PS
@@ -10,9 +10,11 @@ render PS files into a number of graphics file formats."
 HOMEPAGE="https://www.ghostscript.com/"
 SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs`echo ${VERSION} | sed 's/\.//'`/${NAME}-${VERSION}.tar.gz"
 PATCH_URI="ghostscript-unixlpr.patch"
-# Two patches from Fedora, also applied upstream.
-PATCH_URI+=" ghostscript-9.22-fix-Fontmap.GS.patch"
-PATCH_URI+=" ghostscript-9.22-restore-flushpage.patch"
+# Patches from Fedora, also applied upstream.
+PATCH_URI+=" ghostscript-9.22-001-fix-Fontmap.GS.patch"
+PATCH_URI+=" ghostscript-9.22-002-restore-flushpage-operator.patch"
+# Doesn't apply - fold into src_install() instead.
+# PATCH_URI+=" ghostscript-9.22-003-remove-obsolete-font-files.patch"
 
 DEPEND="
   libfontconfig-devel
@@ -27,6 +29,7 @@ DEPEND="
   libX11-devel
   libXt-devel
   poppler-data
+  urw-base35-fonts
   zlib-devel
 "
 
@@ -61,10 +64,6 @@ src_unpack_hook() {
 }
 
 FONTPATH="/usr/share/fonts/urw-base35:/usr/share/fonts"
-for p in /usr/share/poppler/cMap/*
-do
-    FONTPATH=${FONTPATH}:${p}
-done
 
 src_compile() {
 	cd ${S}
@@ -136,11 +135,19 @@ src_install() {
 	rm ${D}/usr/lib/*.a
 	dolib ${B}/sobin/libgs.dll.a
 
-	# Don't ship URW fonts; we have them in urw-base35-fonts.
-	rm -f ${D}/usr/share/ghostscript/${VERSION}/Resource/Font/*
-	keepdir /usr/share/ghostscript/${VERSION}/Resource/Font
+	# Remove obsolete fonts
+	rm ${D}/usr/share/ghostscript/${VERSION}/Resource/Font/NimbusSans-BoldOblique
+	rm ${D}/usr/share/ghostscript/${VERSION}/Resource/Font/NimbusSans-Oblique
+	# Following Fedora, use symlinks rather than font lookup
+	for font in $(basename --multiple ${D}/usr/share/ghostscript/${VERSION}/Resource/Font/*)
+	do
+	    ln -fs /usr/share/fonts/urw-base35/${font}.t1 \
+	       ${D}/usr/share/ghostscript/${VERSION}/Resource/Font/${font}
+	done
 
-	# Don't ship CMaps; we have poppler-data paths in the search path.
-	rm -f ${D}/usr/share/ghostscript/${VERSION}/Resource/CMap/*
-	keepdir /usr/share/ghostscript/${VERSION}/Resource/CMap
+	for file in $(basename --multiple ${D}/usr/share/ghostscript/${VERSION}/Resource/CMap/*)
+	do
+	    find /usr/share/poppler/cMap -type f -name ${file} -exec ln -fs {} \
+		 ${D}/usr/share/ghostscript/${VERSION}/Resource/CMap/${file} \;
+	done
 }
