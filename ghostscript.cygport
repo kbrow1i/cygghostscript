@@ -1,5 +1,5 @@
 NAME="ghostscript"
-VERSION=9.23rc1
+VERSION=9.23
 RELEASE=1
 CATEGORY="Graphics"
 SUMMARY="GPL PostScript interpreter"
