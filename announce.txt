@@ -1,23 +1,21 @@
-From cygwin-announce-ghostscript-9.22-3 Mon Feb 12 18:07:14 2018
+From cygwin-announce-ghostscript-9.23-1 Thu Mar 22 17:11:00 2018
 From: Ken Brown <kbrown@cornell.edu>
 To: cygwin-announce@cygwin.com
-Date: Mon, 12 Feb 2018 18:07:14 -0500
-Subject: ghostscript 9.22-3
+Date: Thu, 22 Mar 2018 17:11:00 -0400
+Message-Id: <20180322171100.1060-1-kbrown@cornell.edu>
+Subject: ghostscript 9.23-1
 
 The following packages have been uploaded to the Cygwin distribution:
 
-* ghostscript-9.22-3
-* libgs9-9.22-3
-* libgs-devel-9.22-3
+* ghostscript-9.23-1
+* libgs9-9.23-1
+* libgs-devel-9.23-1
 
 GNU Ghostscript is a PostScript interpreter capable of converting PS
 files into a number of printer output formats.  Ghostscript can also
 render PS files into a number of graphics file formats.
 
-This is a rebuild with some font-related changes.  It should fix the
-problem reported here:
-
-  https://cygwin.com/ml/cygwin/2018-02/msg00071.html
+This is an update to the latest upstream release.
 
 Ken Brown
 Cygwin's Ghostscript maintainer
