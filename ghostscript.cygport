@@ -1,6 +1,6 @@
 NAME="ghostscript"
-VERSION=9.25
-RELEASE=1
+VERSION=9.26
+RELEASE=0.1
 CATEGORY="Graphics"
 SUMMARY="GPL PostScript interpreter"
 DESCRIPTION="GNU Ghostscript is a PostScript interpreter capable of converting PS
@@ -8,9 +8,9 @@ files into a number of printer output formats.  Ghostscript can also
 render PS files into a number of graphics file formats."
 
 HOMEPAGE="https://www.ghostscript.com/"
-SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs`echo ${VERSION} | sed 's/\.//'`/${NAME}-${VERSION}.tar.gz"
-# SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs925rc1/ghostscript-9.25rc1.tar.gz"
-# SRC_DIR="ghostscript-9.25rc1"
+# SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs`echo ${VERSION} | sed 's/\.//'`/${NAME}-${VERSION}.tar.gz"
+SRC_URI="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9.26rc1/ghostscript-9.26rc1.tar.gz"
+SRC_DIR="ghostscript-9.26rc1"
 PATCH_URI="ghostscript-unixlpr.patch"
 
 DEPEND="
